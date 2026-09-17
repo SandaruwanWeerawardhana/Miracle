@@ -12,11 +12,10 @@ Rust · Axum · Tokio · PostgreSQL (SQLx) · Redis · utoipa (OpenAPI)
 
 ## Quick start
 
-Prerequisites: stable Rust (see `rust-version` in `Cargo.toml`), Docker.
+Prerequisites: stable Rust (see `rust-version` in `Cargo.toml`), a running PostgreSQL and Redis.
 
 ```bash
 cp .env.example .env              # local defaults; never commit .env
-docker compose up -d              # PostgreSQL 18, Redis 8, MinIO
 cargo run                         # applies migrations (DATABASE_RUN_MIGRATIONS=true) and serves :8080
 ```
 
@@ -27,8 +26,6 @@ cargo run                         # applies migrations (DATABASE_RUN_MIGRATIONS=
 | `/api/v1/...` | Versioned REST API |
 | `/docs` | Swagger UI (only when `APP_API_DOCS_ENABLED=true`; default on in development only) |
 | `/openapi.json` | OpenAPI document (same condition) |
-
-Run the whole stack in containers instead: `docker compose --profile app up -d --build`.
 
 ## Everyday commands
 
@@ -86,7 +83,6 @@ src/
   modules/          business modules (see docs/ARCHITECTURE.md)
 migrations/         SQLx migrations (0001_*.sql ...)
 tests/api/          HTTP-level tests against the real router
-docker/             local container support files
 ```
 
 ## Configuration

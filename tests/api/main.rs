@@ -2,7 +2,7 @@
 //! in-process with `tower::ServiceExt::oneshot` (no network port).
 //!
 //! Run everything, including database tests:
-//!   DATABASE_URL=postgres://miracle:miracle@localhost:5432/miracle_test \
+//!   DATABASE_URL=postgres://mirac:5432/miracle_test \
 //!     cargo test -- --include-ignored
 
 #![allow(

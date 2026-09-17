@@ -70,9 +70,6 @@ real code arrives, never as empty placeholders.
 miracle_backend/
 ├── Cargo.toml / Cargo.lock / clippy.toml
 ├── .env.example                      ✅ every supported variable, documented
-├── Dockerfile / .dockerignore        ✅ multi-stage, distroless, non-root
-├── docker-compose.yml                ✅ postgres, redis, minio (+ api profile)
-├── docker/postgres/init.sql          ✅ creates miracle_test
 ├── .github/workflows/ci.yml          ✅ fmt, clippy, tests (with Postgres), release build
 ├── docs/ARCHITECTURE.md              ✅ this file
 ├── migrations/                       ✅ 0001–0010 (foundation → payments)
@@ -354,7 +351,7 @@ Adopt `sqlx::query_as!` for fixed-shape queries once the team's environment is r
 
 1. `cargo install sqlx-cli --no-default-features --features rustls,postgres`
 2. convert queries module by module; run `cargo sqlx prepare -- --all-targets` and commit `.sqlx/`
-3. set `SQLX_OFFLINE=true` in CI and Docker builds; add `cargo sqlx prepare --check` to CI.
+3. set `SQLX_OFFLINE=true` in CI builds; add `cargo sqlx prepare --check` to CI.
 
 Keep `QueryBuilder` for dynamic filters (they cannot be macro-checked).
 
@@ -520,7 +517,7 @@ expire quotations (scheduled), clean up expired sessions and tokens (scheduled).
 
 ## 12. File storage
 
-* Binaries live in S3-compatible storage (MinIO locally). PostgreSQL stores only metadata:
+* Binaries live in S3-compatible storage. PostgreSQL stores only metadata:
   owner, entity link, document type, storage key, original filename, MIME type, size, checksum,
   status (`PENDING_UPLOAD → SCANNING → AVAILABLE | REJECTED`), visibility, timestamps.
 * `shared::storage::ObjectStorage` is the only interface: `put_object`, `delete_object`,
