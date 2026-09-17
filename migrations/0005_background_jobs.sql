@@ -16,7 +16,6 @@ CREATE TABLE background_jobs (
     run_at          TIMESTAMPTZ NOT NULL DEFAULT now(),
     locked_at       TIMESTAMPTZ,
     last_error      TEXT,
-    -- Optional de-duplication key, e.g. 'invoice.generate:<order_id>'.
     idempotency_key TEXT        UNIQUE,
     created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
     completed_at    TIMESTAMPTZ
